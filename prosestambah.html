@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Pendaftaran Berhasil</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            padding-top: 50px;
+        }
+        .success-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            width: 450px;
+            text-align: center;
+        }
+        .icon-success {
+            font-size: 50px;
+            color: #27ae60;
+            margin-bottom: 20px;
+        }
+        h2 { color: #2c3e50; }
+        .data-summary {
+            text-align: left;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #27ae60;
+        }
+        .btn-home {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="success-card">
+    <div class="icon-success">✔</div>
+    <h2>Pendaftaran Berhasil!</h2>
+    <p>Terima kasih telah mendaftar di ITS Khatulistiwa. Data hanya bisa di lihat oleh admin,terima kasih:3</p>
+
+    <div class="data-summary">
+    <?php
+    include 'koneksi.php'; // Panggil jembatan database
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Tangkap data dari form
+        $nik    = $_POST['nik'];
+        $nim    = $_POST['nim'];
+        $nama   = $_POST['nama'];
+        $jk     = $_POST['jk'];
+        $tempat = $_POST['tempat_lahir'];
+        $ttl    = $_POST['ttl'];
+        $alamat = $_POST['alamat'];
+        $hp     = $_POST['hp'];
+        $email  = $_POST['email'];
+        $asal   = $_POST['asal_sekolah'];
+        $prodi  = $_POST['prodi'];
+        $user   = $_POST['username'];
+
+        // Perintah SQL untuk menyimpan
+        $sql = "INSERT INTO pendaftaran (nik, nim, nama, jk, tempat_lahir, ttl, alamat, hp, email, asal_sekolah, prodi, username) 
+                VALUES ('$nik', '$nim', '$nama', '$jk', '$tempat', '$ttl', '$alamat', '$hp', '$email', '$asal', '$prodi', '$user')";
+
+        if (mysqli_query($koneksi, $sql)) {
+            echo "<h3 style='color:green'>Data Berhasil Tersimpan di Database!</h3>";
+            echo "<b>Nama:</b> $nama <br>";
+            echo "<b>Prodi:</b> $prodi <br>";
+        } else {
+            echo "Error: " . $sql . "<br>" . mysqli_error($koneksi);
+        }
+    }
+    ?>
+    <div style="margin-top: 25px;">
+        <a href="index.php" class="btn-home">Kembali ke Beranda</a>
+        
+        <p style="margin-top: 15px;">
+    <a href="login.php" style="color: #3498db; text-decoration: none; font-size: 14px; font-weight: bold;">
+        Masuk sebagai Admin &rarr;
+    </a>
+</p>
+            </a>
+        </p>
+    </div>
+</div>
+
+</body>
+</html>
